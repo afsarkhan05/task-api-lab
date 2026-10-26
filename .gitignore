@@ -1,0 +1,4 @@
+.idea
+task-service/target/
+task-service/target/**/
+
