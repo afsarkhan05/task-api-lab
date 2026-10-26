@@ -5,6 +5,8 @@ import com.example.task.dto.TaskResponse;
 import com.example.task.dto.UpdateTaskRequest;
 import com.example.task.dto.UpdateTaskStatusRequest;
 import com.example.task.entity.Task;
+import com.example.task.entity.TaskPriority;
+import com.example.task.entity.TaskStatus;
 import com.example.task.exception.TaskNotFoundException;
 import com.example.task.repository.TaskRepository;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @Service
 @Transactional
 public class TaskService {
@@ -60,6 +63,26 @@ public class TaskService {
         repository.delete(task);
     }
 
+    public Page<TaskResponse> findAll(
+            TaskStatus status,
+            TaskPriority priority,
+            Pageable pageable) {
+
+        Page<Task> tasks;
+
+        if (status != null && priority != null) {
+            tasks = repository.findByStatusAndPriority(
+                    status, priority, pageable);
+        } else if (status != null) {
+            tasks = repository.findByStatus(status, pageable);
+        } else if (priority != null) {
+            tasks = repository.findByPriority(priority, pageable);
+        } else {
+            tasks = repository.findAll(pageable);
+        }
+
+        return tasks.map(TaskResponse::from);
+    }
    /* private Task getTask(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found: " + id));
