@@ -5,6 +5,7 @@ import com.example.task.dto.TaskResponse;
 import com.example.task.dto.UpdateTaskRequest;
 import com.example.task.dto.UpdateTaskStatusRequest;
 import com.example.task.entity.Task;
+import com.example.task.exception.TaskNotFoundException;
 import com.example.task.repository.TaskRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,10 @@ public class TaskService {
     public TaskResponse findById(UUID id) {
         return TaskResponse.from(getTask(id));
     }
+    private Task getTask(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+    }
 
     public TaskResponse update(UUID id, UpdateTaskRequest request) {
         Task task = getTask(id);
@@ -55,8 +60,8 @@ public class TaskService {
         repository.delete(task);
     }
 
-    private Task getTask(UUID id) {
+   /* private Task getTask(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found: " + id));
-    }
+    }*/
 }

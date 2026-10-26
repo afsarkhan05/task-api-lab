@@ -77,7 +77,7 @@
                 </executions>
                 <configuration>
                     <image>
-                        <name>task-api-lab:local</name>
+                        <name>task-api-lab:123</name>
                     </image>
                 </configuration>
             </plugin>

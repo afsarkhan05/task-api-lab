@@ -33,7 +33,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public TaskResponse findById(@PathVariable UUID id) {
+    public TaskResponse findById(@PathVariable("id") UUID id) {
         return service.findById(id);
     }
 

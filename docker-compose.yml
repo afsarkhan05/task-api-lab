@@ -17,21 +17,5 @@ services:
       timeout: 3s
       retries: 10
 
-  task-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: task-api-lab:local
-    container_name: task-api
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/taskdb
-      SPRING_DATASOURCE_USERNAME: taskuser
-      SPRING_DATASOURCE_PASSWORD: taskpass
-    depends_on:
-      postgres:
-        condition: service_healthy
-
 volumes:
   postgres_data:

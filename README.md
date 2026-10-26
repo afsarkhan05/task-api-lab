@@ -72,6 +72,10 @@ docker compose down -v
 ```
 
 ```bash
+ docker compose logs --tail=150 task-service
+```
+
+```bash
 psql -h localhost -p 15432 -U taskuser -d taskdb 
 OR
 docker exec -it task-postgres psql -U taskuser -d taskdb
