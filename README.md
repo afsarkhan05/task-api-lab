@@ -82,6 +82,10 @@ docker exec -it task-postgres psql -U taskuser -d taskdb
 
 SELECT * FROM tasks;
 ```
+
+```bash
+mvn -pl task-service clean test (Run integration tests)
+```
 ## Learning milestones
 
 1. REST CRUD + PostgreSQL + validation + Flyway
